@@ -1,7 +1,7 @@
  process alignment {
 
 
-		cpus { 16 * task.attempt }
+		cpus { 1 * task.attempt }
 
 		memory { 8.GB * task.attempt }
 		tag "$lane"
@@ -14,7 +14,7 @@
         tuple val(id), val(lane),file(R1), file(R2)
         path genome
         path indexes
-        path home
+
 
         output:
         tuple val(id), val(lane), file("${lane}.indexed.bam")

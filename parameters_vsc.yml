@@ -1,16 +1,18 @@
-ped: '/staging/leuven/stg_00086/Laurens/REVIVID/FNRCP.ped'
 arch: '/archive/leuven/arc_00086' 
 home: '/staging/leuven/stg_00086/Laurens/FNRCP' 
 indexes: '/staging/leuven/stg_00086/resources/reference_genomes/broad/hg38/v0/Homo_sapiens_assembly38.fasta.*' 
-genome: '/staging/leuven/stg_00086/resources/reference_genomes/broad/hg38/v0/Homo_sapiens_assembly38.fasta' 
 genomedict: '/staging/leuven/stg_00086/resources/reference_genomes/broad/hg38/v0/Homo_sapiens_assembly38.dict'
-broadinterval: '/staging/leuven/stg_00086/resources/reference_genomes/broad/hg38/v0/wgs_calling_regions.hg38.interval_list'
-mask: '/staging/leuven/stg_00086/resources/reference_genomes/broad/hg38/v0/mask.bed'
-maskrepeats: '/staging/leuven/stg_00086/resources/reference_genomes/broad/hg38/v0/repeats.bed'
-snps: '/staging/leuven/stg_00086/resources/reference_genomes/broad/hg38/v0/1000G_phase1.snps.high_confidence.hg38.vcf.gz'
-snpsindex: '/staging/leuven/stg_00086/resources/reference_genomes/broad/hg38/v0/1000G_phase1.snps.high_confidence.hg38.vcf.gz.tbi'
-indels: '/staging/leuven/stg_00086/resources/reference_genomes/broad/hg38/v0/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz'
-indelsindex: '/staging/leuven/stg_00086/resources/reference_genomes/broad/hg38/v0/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi'
+genome = '/home/laurens/data/resources/reference_genome/hg19/hg19.fa'
 programs: '/staging/leuven/stg_00086/resources/programs'
-humandb: '/staging/leuven/stg_00086/resources/humandb'
-annovardbs: '-protocol refgene,avsnp150,gnomad30_genome,clinvar_20210123,regsnpintron,dbnsfp41a -operation g,f,f,f,f,f'
+tools: '/usr/roadrunner/programs/MIPGEN/tools'
+Readdirection = ['R1', 'R2']
+mips = '/home/laurens/roadrunner/2020/designfiles/design3.txt'
+barcodes = '/home/laurens/roadrunner/2020/barcodes/run10barcodes.txt'
+rawdata = '/home/laurens/roadrunner/rawdata/run10.zip'
+params.designbed = '/home/laurens/roadrunner/2020/designfiles/design3.bed'
+params.output = '/mnt/hdd2/data/lau/roadrunner/2020/runs/run11'
+
+singularity {
+   enabled = true
+   autoMounts = true
+}
