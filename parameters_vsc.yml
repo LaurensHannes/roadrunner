@@ -1,4 +1,4 @@
-arch: '/archive/leuven/arc_00086' 
+arch: '/vsc-hard-mounts/leuven-archive/arc_00086' 
 home: '/staging/leuven/stg_00086/Laurens/FNRCP' 
 indexes: '/staging/leuven/stg_00086/resources/reference_genomes/broad/hg38/v0/Homo_sapiens_assembly38.fasta.*' 
 genomedict: '/staging/leuven/stg_00086/resources/reference_genomes/broad/hg38/v0/Homo_sapiens_assembly38.dict'
@@ -12,7 +12,3 @@ rawdata = '/home/laurens/roadrunner/rawdata/run10.zip'
 params.designbed = '/home/laurens/roadrunner/2020/designfiles/design3.bed'
 params.output = '/mnt/hdd2/data/lau/roadrunner/2020/runs/run11'
 
-singularity {
-   enabled = true
-   autoMounts = true
-}
