@@ -6,16 +6,19 @@ process mipgen {
         errorStrategy 'retry'
         maxRetries 3
 		container = 'docker://laurenshannes/revivid'
-		cpus { 8 * task.attempt }
+		cpus 1
 
 	input:
 	tuple val(id), val(lane),file(assembled)
-	path barcodes from params.barcodes
+	path barcodes
 
 	output:
-	file "$x*"
+	tuple val(id),val(lane),file(${lane}.indexed.fastq)
 
-	"""	
-	python2.7  /usr/roadrunner/programs/MIPGEN/tools/mipgen_fq_cutter_se.py $assembled -t -b $barcodes -m 8,8 -o $lane
-	"""
+	
+	$/
+    python2.7 mipgen_fq_cutter_se.py $assembled -t -b $barcodes -m 8,0 -o ${lane}.temp
+	sed -e 's/ /_/' ${lane}.temp* | perl -pe 's/(?<=\d):(?=[ATGCN]{8})/:#/;' > ${lane}.indexed.fastq
+	/$
+
 }

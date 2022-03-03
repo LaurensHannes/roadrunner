@@ -11,7 +11,7 @@
 
 
 		input:
-        tuple val(id), val(lane),file(R1), file(R2)
+        tuple val(id),val(lane),file(cutfastq)
         path genome
         path indexes
 
@@ -20,6 +20,6 @@
         tuple val(id), val(lane), file("${lane}.indexed.bam")
 
         """
-        bwa mem -t ${task.cpus} $genome $R1 $R2 | samtools sort -@ ${task.cpus} -o ${lane}.indexed.bam
+        bwa mem -r 0.5 -t ${task.cpus} -C $genome $cutfastq | samtools sort -@ ${task.cpus} -o ${lane}.indexed.bam
         """
 }
