@@ -1,10 +1,9 @@
 indexes: '/mnt/hdd/data/resources/reference_genome/hg19/hg19.fa.*' 
 genomedict: '/mnt/hdd/data/resources/reference_genome/hg19/hg19.dict'
 genome: '/mnt/hdd/data/resources/reference_genome/hg19/hg19.fa'
-tools: '/usr/roadrunner/programs/MIPGEN/tools'
 Readdirection: ['R1', 'R2']
 mips: '/mnt/hdd2/data/lau/roadrunner/2020/designfiles/design3.txt'
 barcodes: '/mnt/hdd2/data/lau/roadrunner/2020/barcodes/run10barcodes.txt'
 rawdata: '/mnt/hdd2/data/lau/roadrunner/rawdata/run10.zip'
-params.designbed: '/mnt/hdd2/data/lau/roadrunner/2020/designfiles/design3.bed'
-params.output: '/mnt/hdd2/data/lau/roadrunner/2020/runs/run11'
+designbed: '/mnt/hdd2/data/lau/roadrunner/2020/designfiles/design3.bed'
+output: '/mnt/hdd2/data/lau/roadrunner/2020/runs/run11'
