@@ -5,7 +5,6 @@ process mipgenparam {
 		memory '2 GB'
         errorStrategy 'retry'
         maxRetries 3
-		container = 'docker://laurenshannes/revivid'
 		cpus 1
 		
         input:

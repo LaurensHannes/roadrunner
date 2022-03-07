@@ -3,17 +3,17 @@ process unzip {
 
 	tag "${compressed}"
 	cpus 1
-	executor 'local'
+
 
 	
 	input:
-    file compressed 
+    path compressed 
 	
 	output:
-	file '*.fastq.gz'
+	path '*.fastq.gz'
 	
 	"""
-unzip '$compressed'
+	unzip '$compressed'
 	"""
 	
 	}

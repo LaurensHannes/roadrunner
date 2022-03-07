@@ -24,12 +24,12 @@ include { pear } from './modules/pear.nf'
 include { mipgenPE } from './modules/mipgenPE.nf'
 include { prepare_interval } from './modules/prepare_interval.nf'
 include { mipgenparam } from './modules/mipgenparam.nf'
+include { sortbam } from './modules/sortbam.nf'
 
 //channels
 
 
 run = channel.value('run10')
-tools =channel.fromPath(params.tools)
 GQ_ch = channel.value(30)
 barcodes_ch = Channel.fromPath(params.barcodes)
 indexes_ch = Channel.fromPath(params.indexes).toList()
@@ -42,8 +42,9 @@ unzip(params.rawdata)
 unzip.out[0].flatten().filter(~/.*R\d+.fastq.gz/).map{file -> tuple(file.getBaseName(3), file)}.groupTuple().dump(tag:"test").flatten().collate( 3 ).map{lane,R1,R2 -> tuple(R1.simpleName,lane,R1,R2)}.set{gzipped_ch}
 fastQC(gzipped_ch)
 pear(gzipped_ch)
-mipgenPE(pear.out[0],barcodes_ch)
-alignment(mipgenPE.out[0],params.genome,channel.indexes_ch)
-mipgenparam(alignment.out[0],param.barcodes,params.mips)
+mipgenPE(pear.out[0],params.barcodes)
+alignment(mipgenPE.out[0],params.genome,indexes_ch)
+mipgenparam(alignment.out[0],params.barcodes,params.mips)
+sortbam(mipgenparam.out[0])
 
 }
