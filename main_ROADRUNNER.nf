@@ -25,6 +25,12 @@ include { mipgenPE } from './modules/mipgenPE.nf'
 include { prepare_interval } from './modules/prepare_interval.nf'
 include { mipgenparam } from './modules/mipgenparam.nf'
 include { sortbam } from './modules/sortbam.nf'
+include { applyBQSR } from './modules/applyBQSR.nf'
+include { baserecalibrator } from './modules/baserecalibrator.nf'
+include { genotype } from './modules/genotype.nf'
+include { combineGVCFs } from './modules/combineGVCFs.nf'
+include { genotypeGVCFs } from './modules/genotypeGVCFs.nf'
+
 
 //channels
 
@@ -46,5 +52,10 @@ mipgenPE(pear.out[0],params.barcodes)
 alignment(mipgenPE.out[0],params.genome,indexes_ch)
 mipgenparam(alignment.out[0],params.barcodes,params.mips)
 sortbam(mipgenparam.out[0])
+baserecalibrator(sortbam.out[0],params.genome, indexes_ch, params.genomedict, params.snps, params.snpsindex)
+applyBQSR(baserecalibrator.out,params.genome,indexes_ch,params.genomedict)
+genotype(applyBQSR.out,params.genome,indexes_ch,params.broadinterval,params.genomedict,params.mask)
+combineGVCFs(genotype.out[0],params.genome,indexes_ch,params.genomedict)
+genotypeGVCFs(combineGVCFs.out[0],params.genome,indexes_ch,params.broadinterval,params.genomedict,params.mask)
 
 }

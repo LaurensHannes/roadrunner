@@ -1,4 +1,6 @@
 process sortbam {
+
+
 	tag "$lane"
         input:
         tuple val(id), val(lane), path(sams)
