@@ -5,7 +5,7 @@ process duplicates {
 		container "docker://broadinstitute/gatk"
         errorStrategy 'retry'
          maxRetries 3
-		 	maxForks 4
+		 	maxForks 8
 			publishDir './results/bams', mode: 'copy', overwrite: true
 		
 	input:
