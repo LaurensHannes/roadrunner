@@ -10,8 +10,8 @@ process offtargetcount {
 		
 
 		output:
-		tuple val(x), path("${id}.samples.csv")
-		tuple val(x), path("${id}.mips.csv")
+		tuple val(id), path("${id}.samples.csv")
+		tuple val(id), path("${id}.mips.csv")
 	
 
 		"""
