@@ -3,8 +3,9 @@ process offtargetcount {
 	tag "$id"
 
         input:
-        path mips from params.mips
+        
         tuple val(id), file(sam)
+		path mips
 		path barcodes
 		
 
