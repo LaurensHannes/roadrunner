@@ -11,9 +11,9 @@ process create_wise_files {
 
 
 	output:
-	path ("$id.samplewise.txt")
-	path ("$id.*.mipwise.txt")
-	path ("$id.probes.txt")
+	path ("${id}.samplewise.txt")
+	path ("${id}.mipwise.txt")
+	path ("${id}.probes.txt")
 	"""
 	index=\$(echo $id | egrep -o "[ACTG]{8}")
 	id=\$(egrep "\$index" $barcodes | cut -f 1)
