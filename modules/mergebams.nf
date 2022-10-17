@@ -11,7 +11,7 @@ process mergebams {
 	
 	input:
 	tuple val(id),file(bams)
-	path home
+
 
 	
 	output:
