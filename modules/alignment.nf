@@ -17,9 +17,10 @@
 
 
         output:
-        tuple val(id), val(lane), file("${lane}.indexed.bam")
+        tuple val(id), val(lane), file("${lane}.indexed.bam"), file("${lane}.indexed.bam.bai")
 
         """
         bwa mem -r 0.5 -t ${task.cpus} -C $genome $cutfastq | samtools sort -@ ${task.cpus} -o ${lane}.indexed.bam
+		samtools index -@ ${task.cpus} ${lane}.indexed.bam
         """
 }
