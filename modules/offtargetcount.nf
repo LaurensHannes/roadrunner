@@ -10,7 +10,7 @@ process offtargetcount {
 		
 
 		output:
-		tuple val(x), path("${id}.samples")
+		tuple val(x), path("${id}.samples.csv")
 		tuple val(x), path("${id}.mips.csv")
 	
 
@@ -22,8 +22,8 @@ process offtargetcount {
 		
 		echo "$id" | egrep -o '[ACGT]{8}' > temp.txt
 		fgrep -f temp.txt $barcodes > bc.txt
-		python3 /usr/roadrunner/scripts/offtargetsamples.py -E bc.txt -OFF $samples -OUT ${id}.samples
-		python3 /usr/roadrunner/scripts/offtargetmips.py -E $ext -R $rc -OFF $mips -OUT ${id}.mips.temp
+		python3 /usr/roadrunner/scripts/offtargetsamples.py -E bc.txt -OFF ${id}.samples.offtarget.sam -OUT ${id}.samples
+		python3 /usr/roadrunner/scripts/offtargetmips.py -E $ext -R $rc -OFF ${id}.mips.offtarget.sam -OUT ${id}.mips.temp
 		sed -i -e 's/\"//g' ${id}.mips.temp.csv
 		perl -pe 's/(?<=[+-]),(?=[0123456789]+)/\t/g' ${id}.mips.temp.csv > ${id}.mips.temp2.csv
 		awk '{a[\$1]+=\$2}END{for(i in a) print i,a[i]}' ${id}.mips.temp2.csv > ${id}.mips.csv
