@@ -6,6 +6,7 @@ process create_wise_files {
 	tuple val(x), path(on), path(off)
 	tuple val(x), path(onmips), path(offmips)
 	path barcodes
+	val run
 
 
 
