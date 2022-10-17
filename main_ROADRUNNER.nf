@@ -37,6 +37,7 @@ include { offtargetcount } from './modules/offtargetcount.nf'
 include { create_wise_files } from './modules/createwisefiles.nf'
 include { combined_wise } from './modules/combinewise.nf'
 include { createtable } from './modules/createtable.nf'
+include { duplicates } from './modules/duplicates.nf'
 
 //channels
 
@@ -57,7 +58,8 @@ pear(gzipped_ch)
 mipgenPE(pear.out[0],params.barcodes)
 alignment(mipgenPE.out[0],params.genome,indexes_ch)
 mergebams(alignment.out[0].map{id,lane,bam,bai -> tuple(id,bam)}.groupTuple())
-mipgenparam(mergebams.out[0],params.barcodes,params.mips)
+duplicates(mergebams.out[0])
+mipgenparam(duplicates.out[0],params.barcodes,params.mips)
 sortbam(mipgenparam.out[0])
 baserecalibrator(sortbam.out[0],params.genome, indexes_ch, params.genomedict, params.snps, params.snpsindex)
 applyBQSR(baserecalibrator.out,params.genome,indexes_ch,params.genomedict)

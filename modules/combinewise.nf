@@ -1,6 +1,6 @@
 process combined_wise {
 	
-		tag "$id"
+		tag "$run"
 		publishDir "./results/$run", mode: 'copy', overwrite: true
 	
 	input: 

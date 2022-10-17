@@ -5,8 +5,7 @@ process mergebams {
 	 time { 2.hour * task.attempt }
 	 errorStrategy 'retry' 
 	maxRetries 3
-	myDir = file('./results/bams')
-	myDir.mkdirs()
+
 	publishDir './results/bams', mode: 'copy', overwrite: true
 	
 	input:
