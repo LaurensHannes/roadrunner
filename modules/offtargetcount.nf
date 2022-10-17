@@ -20,7 +20,7 @@ process offtargetcount {
 		cat $sam | cut -f 1 > ${id}.samples.offtarget.sam
 		cat $sam | cut -f 10 > ${id}.mips.offtarget.sam
 		
-		echo "$x" | egrep -o '[ACGT]{8}' > temp.txt
+		echo "$id" | egrep -o '[ACGT]{8}' > temp.txt
 		fgrep -f temp.txt $barcodes > bc.txt
 		python3 /usr/roadrunner/scripts/offtargetsamples.py -E bc.txt -OFF $samples -OUT ${id}.samples
 		python3 /usr/roadrunner/scripts/offtargetmips.py -E $ext -R $rc -OFF $mips -OUT ${id}.mips.temp
