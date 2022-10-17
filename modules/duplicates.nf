@@ -1,6 +1,6 @@
 process duplicates { 
 
-        tag "$lane"
+        tag "$id"
 		
 		container "docker://broadinstitute/gatk"
         errorStrategy 'retry'
