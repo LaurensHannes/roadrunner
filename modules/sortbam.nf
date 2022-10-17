@@ -1,15 +1,15 @@
 process sortbam {
 
 
-	tag "$lane"
+	tag "$id"
         input:
-        tuple val(id), val(lane), path(sams)
+        tuple val(id), path(sams)
 
         output:
-		tuple val(id), val(lane), path("${lane}.sorted.bam"), path("${lane}.sorted.bam.bai")
+		tuple val(id), path("${id}.sorted.bam"), path("${id}.sorted.bam.bai")
 
         """
-        samtools view -bS $sams | samtools sort -o ${lane}.sorted.bam
-        samtools index ${lane}.sorted.bam
+        samtools view -bS $sams | samtools sort -o ${id}.sorted.bam
+        samtools index ${id}.sorted.bam
         """
 }

@@ -1,6 +1,6 @@
 process applyBQSR {
 
-        tag "$lane"
+        tag "$id"
 		 time { 30.minute * task.attempt }
 		 errorStrategy 'retry' 
 		maxRetries 3
@@ -10,18 +10,18 @@ process applyBQSR {
 
         input:
 
-		tuple val(id), val(lane) , file(bam), file(bai), file(table)
+		tuple val(id) , file(bam), file(bai), file(table)
         path genome
 		path indexes 
         path dict 
 
 
         output:
-        tuple val(id), val(lane) ,file("${lane}.recallibrated.bam"),file("${lane}.recallibrated.bam.bai") 
+        tuple val(id) ,file("${id}.recallibrated.bam"),file("${id}.recallibrated.bam.bai") 
 
         """
-        gatk ApplyBQSR -R $genome -I $bam -bqsr-recal-file $table -O ${lane}.recallibrated.bam
-		samtools index -@ ${task.cpus} ${lane}.recallibrated.bam
+        gatk ApplyBQSR -R $genome -I $bam -bqsr-recal-file $table -O ${id}.recallibrated.bam
+		samtools index -@ ${task.cpus} ${id}.recallibrated.bam
 		
 		
         """

@@ -1,6 +1,6 @@
 process genotype {
 
-        tag "$lane"
+        tag "$id"
 		 time { 12.hour * task.attempt }
 		 errorStrategy 'retry' 
 		maxRetries 3
@@ -15,7 +15,7 @@ process genotype {
 
 
         input:
-        tuple val(id), val(lane), file(bam),file(bai) 
+        tuple val(id), file(bam),file(bai) 
         path genome 
         path indexes
 		path interval
@@ -24,9 +24,9 @@ process genotype {
 		
 		
         output:
-        tuple val(id), file("${lane}.g.vcf.gz")
+        tuple val(id), file("${id}.g.vcf.gz")
         """
-        gatk HaplotypeCaller --verbosity INFO -ERC GVCF -L $interval -R $genome -I $bam -O ${lane}.g.vcf.gz --sequence-dictionary ${dict} --pcr-indel-model NONE -G StandardAnnotation -G AS_StandardAnnotation -G StandardHCAnnotation --native-pair-hmm-threads ${task.cpus}
+        gatk HaplotypeCaller --verbosity INFO -ERC GVCF -L $interval -R $genome -I $bam -O ${id}.g.vcf.gz --sequence-dictionary ${dict} --pcr-indel-model NONE -G StandardAnnotation -G AS_StandardAnnotation -G StandardHCAnnotation --native-pair-hmm-threads ${task.cpus}
         """
 
 }
