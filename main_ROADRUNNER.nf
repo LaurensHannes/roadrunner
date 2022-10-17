@@ -42,8 +42,8 @@ include { duplicates } from './modules/duplicates.nf'
 //channels
 
 
-run = channel.value('run10')
-GQ_ch = channel.value(30)
+run = channel.value(params.run)
+GQ_ch = channel.value(GQ)
 indexes_ch = Channel.fromPath(params.indexes).toList()
 
 
