@@ -11,7 +11,7 @@ process create_run_vcf {
         val GQ 
 
         output:
-        path '${run}.${GQ}.vcf' into run_vcf_ch
+        tuple val(run), val(GQ), path("${run}.${GQ}.vcf") 
 
         """
         vcf-merge $vcfgz > ${run}.${GQ}.vcf
