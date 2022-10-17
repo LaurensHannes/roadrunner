@@ -9,7 +9,7 @@ process GQfilter {
          
 
         output:
-        tuple val(id), path("${id}.${GQ}.vcf)
+        tuple val(id), path("${id}.${GQ}.vcf")
 
         """
         gatk FilterVcf -I $vcf --MIN_GQ $GQ -O ${id}.${GQ}.vcf
