@@ -35,7 +35,7 @@ include { GQfilter } from './modules/GQfilter.nf'
 include { create_run_vcf } from './modules/createrunvcf.nf'
 include { offtargetcount } from './modules/offtargetcount.nf'
 include { create_wise_files } from './modules/createwisefiles.nf'
-include { combined_wise } from './modules/combinedwise.nf'
+include { combined_wise } from './modules/combinewise.nf'
 include { createtable } from './modules/createtable.nf'
 
 //channels
