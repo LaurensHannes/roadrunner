@@ -33,7 +33,7 @@ include { combineGVCFs } from './modules/combineGVCFs.nf'
 include { genotypeGVCFs } from './modules/genotypeGVCFs.nf'
 include { GQfilter } from './modules/GQfilter.nf'
 include { create_run_vcf } from './modules/createrunvcf.nf'
-
+include { offtargetcount } from './modules/offtargetcount.nf'
 
 //channels
 
@@ -62,5 +62,5 @@ genotype(applyBQSR.out,params.genome,indexes_ch,prepare_interval.out[0],params.g
 genotypeGVCFs(genotype.out[0],params.genome,indexes_ch,params.genomedict,prepare_interval.out[0])
 GQfilter(genotypeGVCFs.out[0],GQ_ch)
 create_run_vcf(GQfilter.out[0].map{id,vcfgz,vcftbi -> vcfgz}.flatten().toList(),GQfilter.out[0].map{id,vcfgz,vcftbi -> vcftbi}.flatten().toList(),run,GQ_ch)
-
+offtargetcount(mipgenparam.out[1],params.mips,params.barcodes)
 }
