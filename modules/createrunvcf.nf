@@ -1,7 +1,5 @@
 process create_run_vcf {
 
-	myDir = file("./results/${run}")
-	myDir.mkdirs()
 	publishDir "./results/$run", mode: 'copy', overwrite: true
 
         input:
