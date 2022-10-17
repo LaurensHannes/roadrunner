@@ -3,8 +3,8 @@ process create_wise_files {
 	publishDir "./results/$run", mode: 'copy', overwrite: true
 
 	input:
-	tuple val(x), path(on), path(off)
-	tuple val(x), path(onmips), path(offmips)
+	tuple val(id), path(on), path(off)
+	tuple val(id), path(onmips), path(offmips)
 	path barcodes
 	val run
 
