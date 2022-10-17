@@ -32,6 +32,7 @@ include { genotype } from './modules/genotype.nf'
 include { combineGVCFs } from './modules/combineGVCFs.nf'
 include { genotypeGVCFs } from './modules/genotypeGVCFs.nf'
 include { GQfilter } from './modules/GQfilter.nf'
+include { create_run_vcf } from './modules/createrunvcf.nf'
 
 
 //channels
@@ -60,4 +61,6 @@ applyBQSR(baserecalibrator.out,params.genome,indexes_ch,params.genomedict)
 genotype(applyBQSR.out,params.genome,indexes_ch,prepare_interval.out[0],params.genomedict)
 genotypeGVCFs(genotype.out[0],params.genome,indexes_ch,params.genomedict,prepare_interval.out[0])
 GQfilter(genotypeGVCFs.out[0],GQ_ch)
+create_run_vcf(GQfilterGVCFs.map{id,vcfgz,vcftbi -> vcfgz}.flatten().toList(),GQfilterGVCFs.map{id,vcfgz,vcftbi -> vcftbi}.flatten().toList(),run,GQ_ch)
+
 }
