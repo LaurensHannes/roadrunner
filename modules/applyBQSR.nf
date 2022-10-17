@@ -20,7 +20,7 @@ process applyBQSR {
         tuple val(id), val(lane) ,file("${lane}.recallibrated.bam"),file("${lane}.recallibrated.bam.bai") 
 
         """
-        gatk ApplyBQSR -R $genome -I $bam -bqsr-recal-file $table -O ${id}.${lane}.recallibrated.bam
+        gatk ApplyBQSR -R $genome -I $bam -bqsr-recal-file $table -O ${lane}.recallibrated.bam
 		samtools index -@ ${task.cpus} ${lane}.recallibrated.bam
 		
 		
