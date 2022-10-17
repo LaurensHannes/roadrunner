@@ -6,7 +6,7 @@ process mergebams {
 	 errorStrategy 'retry' 
 	maxRetries 3
 
-	publishDir './results/bams', mode: 'copy', overwrite: true
+
 	
 	input:
 	tuple val(id),file(bams)
