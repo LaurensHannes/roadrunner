@@ -8,7 +8,7 @@ process createtable {
 
 
         output:
-        tuple val(run), val(GQ), path("${run}.${GQ}.genotypes.tsv"}
+        tuple val(run), val(GQ), path("${run}.${GQ}.genotypes.tsv")
 
 
 		"""
