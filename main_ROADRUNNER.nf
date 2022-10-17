@@ -61,6 +61,6 @@ applyBQSR(baserecalibrator.out,params.genome,indexes_ch,params.genomedict)
 genotype(applyBQSR.out,params.genome,indexes_ch,prepare_interval.out[0],params.genomedict)
 genotypeGVCFs(genotype.out[0],params.genome,indexes_ch,params.genomedict,prepare_interval.out[0])
 GQfilter(genotypeGVCFs.out[0],GQ_ch)
-create_run_vcf(GQfilterGVCFs.map{id,vcfgz,vcftbi -> vcfgz}.flatten().toList(),GQfilterGVCFs.map{id,vcfgz,vcftbi -> vcftbi}.flatten().toList(),run,GQ_ch)
+create_run_vcf(GQfilter.map{id,vcfgz,vcftbi -> vcfgz}.flatten().toList(),GQfilterGVCFs.map{id,vcfgz,vcftbi -> vcftbi}.flatten().toList(),run,GQ_ch)
 
 }
