@@ -1,6 +1,6 @@
 process create_wise_files {
 
-	publishDir "./results/$run", mode: 'copy', overwrite: true
+	tag "$id"
 
 	input:
 	tuple val(id), path(on), path(off)
@@ -8,12 +8,11 @@ process create_wise_files {
 	path barcodes
 	val run
 
-
-
 	output:
-	path ("${id}.samplewise.txt")
-	path ("${id}.mipwise.txt")
-	path ("${id}.probes.txt")
+	tuple val(id),path ("${id}.samplewise.txt")
+	tuple val(id),path ("${id}.mipwise.txt")
+	tuple val(id),path ("${id}.probes.txt")
+	
 	"""
 	index=\$(echo $id | egrep -o "[ACTG]{8}")
 	id=\$(egrep "\$index" $barcodes | cut -f 1)
