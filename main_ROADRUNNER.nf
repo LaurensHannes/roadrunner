@@ -57,6 +57,6 @@ sortbam(mipgenparam.out[0])
 baserecalibrator(sortbam.out[0],params.genome, indexes_ch, params.genomedict, params.snps, params.snpsindex)
 applyBQSR(baserecalibrator.out,params.genome,indexes_ch,params.genomedict)
 genotype(applyBQSR.out,params.genome,indexes_ch,prepare_interval.out[0],params.genomedict)
-genotypeGVCFs(genotype.out[0],params.genome,indexes_ch,params.broadinterval,params.genomedict,params.mask)
+genotypeGVCFs(genotype.out[0],params.genome,indexes_ch,params.genomedict,prepare_interval.out[0])
 
 }
