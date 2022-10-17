@@ -1,7 +1,7 @@
 process prepare_interval {
 
 	input:
-	file design
+	path design
 
 	output:
 	file("interval.bed")
