@@ -65,6 +65,7 @@ GQfilter(genotypeGVCFs.out[0],GQ_ch)
 create_run_vcf(GQfilter.out[0].map{id,vcfgz,vcftbi -> vcfgz}.flatten().toList(),GQfilter.out[0].map{id,vcfgz,vcftbi -> vcftbi}.flatten().toList(),run,GQ_ch)
 offtargetcount(mipgenparam.out[1],params.mips,params.barcodes)
 mipgenparam.out[2].join(offtargetcount[0]).view()
+//mipgenparam.out[2].view()
 //create_wise_files(mipgenparam.out[2].join(offtargetcount[0]),mipgenparam.out[3].join(offtargetcount[1]),params.barcodes,run)
 
 }
