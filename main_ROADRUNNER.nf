@@ -43,7 +43,7 @@ include { duplicates } from './modules/duplicates.nf'
 
 
 run = channel.value(params.run)
-GQ_ch = channel.value(GQ)
+GQ_ch = channel.value(params.GQ)
 indexes_ch = Channel.fromPath(params.indexes).toList()
 
 
