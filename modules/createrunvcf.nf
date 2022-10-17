@@ -1,8 +1,8 @@
 process create_run_vcf {
 
-	myDir = file('./results/$run')
+	myDir = file("./results/$run")
 	myDir.mkdirs()
-	publishDir './results/$run', mode: 'copy', overwrite: true
+	publishDir "./results/$run", mode: 'copy', overwrite: true
 
         input:
         path vcfgz 
