@@ -44,7 +44,6 @@ include { duplicates } from './modules/duplicates.nf'
 
 run = channel.value('run10')
 GQ_ch = channel.value(30)
-barcodes_ch = Channel.fromPath(params.barcodes)
 indexes_ch = Channel.fromPath(params.indexes).toList()
 
 
@@ -64,7 +63,7 @@ sortbam(mipgenparam.out[0])
 baserecalibrator(sortbam.out[0],params.genome, indexes_ch, params.genomedict, params.snps, params.snpsindex)
 applyBQSR(baserecalibrator.out,params.genome,indexes_ch,params.genomedict)
 genotype(applyBQSR.out,params.genome,indexes_ch,prepare_interval.out[0],params.genomedict)
-genotypeGVCFs(genotype.out[0],params.genome,indexes_ch,params.genomedict,prepare_interval.out[0])
+genotypeGVCFs(genotype.out[0],params.genome,indexes_ch,params.genomedict,prepare_interval.out[0],param.alleles)
 GQfilter(genotypeGVCFs.out[0],GQ_ch)
 create_run_vcf(GQfilter.out[0].map{id,vcfgz,vcftbi -> vcfgz}.flatten().toList(),GQfilter.out[0].map{id,vcfgz,vcftbi -> vcftbi}.flatten().toList(),run,GQ_ch)
 offtargetcount(mipgenparam.out[1],params.mips,params.barcodes)
