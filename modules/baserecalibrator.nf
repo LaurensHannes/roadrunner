@@ -21,6 +21,6 @@ process baserecalibrator {
         tuple val(id), val(lane), file(merged), file(bai), file("${lane}.recal_data.table") 
 
         """
-        gatk BaseRecalibrator -I $merged -R $genome -O ${id}.${chr}.recal_data.table --known-sites $snps --verbosity WARNING
+        gatk BaseRecalibrator -I $merged -R $genome -O ${lane}.recal_data.table --known-sites $snps --verbosity WARNING
         """
 }
