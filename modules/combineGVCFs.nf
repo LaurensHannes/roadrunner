@@ -9,13 +9,13 @@ process combineGVCFs {
 	stageInMode	'copy'
 		
 	input:
-	tuple val(family), path(vcf1)
+	tuple val(id), path(vcf1)
 	path genome 
 	path indexes
 	path dict
 	
 	output:
-	tuple val(family), path("${family}.g.vcf.gz"), path("${family}.g.vcf.gz.tbi")
+	tuple val(family), path("${id}.g.vcf.gz"), path("${id}.g.vcf.gz.tbi")
 	
 """
 	gatk IndexFeatureFile -I $vcf1
