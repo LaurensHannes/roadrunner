@@ -16,6 +16,7 @@ process genotypeGVCFs {
 		path dict		
 		path interval
 		path alleles
+		path allelesidx
 	
 	output:
 	tuple val(id), path("${id}.vcf.gz"), path("${id}.vcf.gz.tbi")
