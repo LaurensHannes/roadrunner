@@ -21,7 +21,7 @@ process genotypeGVCFs {
 	tuple val(id), path("${id}.vcf.gz"), path("${id}.vcf.gz.tbi")
 	
 """
-	gatk GenotypeGVCFs -R $genome -V $vcf -O ${id}.vcf.gz --force-output-intervals $alleles --sequence-dictionary $dict -L $interval --call-genotypes true -all-sites true
+	gatk GenotypeGVCFs -R $genome -V $vcf -O ${id}.vcf.gz --sequence-dictionary $dict -L $interval --call-genotypes true -all-sites true
 	gatk SelectVariants -R $genome -V ${id}.temp.vcf.gz -O ${id}.vcf.gz --concordance $alleles
 """
 
