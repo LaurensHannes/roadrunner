@@ -12,7 +12,8 @@ process GQfilter {
         tuple val(id), path("${id}.${GQ}.vcf.gz"), path("${id}.${GQ}.vcf.gz.tbi")
 
         """
-        gatk FilterVcf -I $vcf --MIN_DP $GQ -O ${id}.${GQ}.vcf.gz --set-filtered-genotype-to-no-call true
+        gatk FilterVcf -I $vcf --MIN_DP $GQ -O ${id}.temp.${GQ}.vcf.gz 
+        gatk SelectVariants -I  ${id}.temp.${GQ}.vcf.gz -O ${id}.${GQ}.vcf.gz --set-filtered-genotype-to-no-call true
         """
 
 }
