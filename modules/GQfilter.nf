@@ -13,7 +13,7 @@ process GQfilter {
 
         """
         gatk FilterVcf -I $vcf --MIN_DP $GQ -O ${id}.temp.${GQ}.vcf.gz 
-        gatk SelectVariants -I  ${id}.temp.${GQ}.vcf.gz -O ${id}.${GQ}.vcf.gz --set-filtered-gt-to-nocall true
+        gatk SelectVariants -V  ${id}.temp.${GQ}.vcf.gz -O ${id}.${GQ}.vcf.gz --set-filtered-gt-to-nocall true
         """
 
 }
