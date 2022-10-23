@@ -12,8 +12,7 @@ process GQfilter {
         tuple val(id), path("${id}.${GQ}.vcf.gz"), path("${id}.${GQ}.vcf.gz.tbi")
 
         """
-        gatk FilterVcf -I $vcf --MIN_DP $GQ -O ${id}.temp.${GQ}.vcf.gz 
-        gatk SelectVariants -V  ${id}.temp.${GQ}.vcf.gz -O ${id}.${GQ}.vcf.gz --set-filtered-gt-to-nocall true
+        gatk VariantFiltration -V $vcf -G-filter "DP < $GQ" --genotype-filter-name "Depth" --set-filtered-genotype-to-no-call true -O ${id}.${GQ}.vcf.gz 
         """
 
 }
