@@ -12,7 +12,7 @@ process createtable {
 
 
 		"""
-		plink1.9 --vcf $vcf --allow-no-sex --recode --out table --make-bed
+		plink1.9 --vcf $vcf --allow-no-sex --recode --out table --make-bed --double-id
 		transpose -t -l 2000x2000 --fsep " " table.ped > table.transposed.ped
 		head -n 1 table.transposed.ped > header.transposed.ped
 		sed -i '1,6d' table.transposed.ped
