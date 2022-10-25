@@ -28,9 +28,11 @@ process mipgenparam {
 	fgrep -f temp.txt $barcodes > bc.txt
 	fgrep -f temp2.txt $barcodes > bcc.txt
 	fgrep -f temp3.txt $barcodes > bcrc.txt 
-	if [ -s bc.txt ] then 
+	if [ -s bc.txt ];
+	then 
 	samtools view -h $bam | python2.7 /usr/roadrunner/programs/MIPGEN/tools/mipgen_smmip_collapser.py 8 ${id} -m $mips -f 2 -T -r -w False -S -b bc.txt -s
-	elif [ -s bcc.txt ] then
+	elif [ -s bcc.txt ];
+	then
 	samtools view -h $bam | python2.7 /usr/roadrunner/programs/MIPGEN/tools/mipgen_smmip_collapser.py 8 ${id} -m $mips -f 2 -T -r -w False -S -bcc.txt -s
 	else
 	samtools view -h $bam | python2.7 /usr/roadrunner/programs/MIPGEN/tools/mipgen_smmip_collapser.py 8 ${id} -m $mips -f 2 -T -r -w False -S -b bcrc.txt -s
