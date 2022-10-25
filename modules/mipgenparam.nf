@@ -25,9 +25,9 @@ process mipgenparam {
 	echo "${id}" | egrep -o '[ACGT]{8}' > temp.txt
 	echo "${id}" | egrep -o '[ACGT]{8}' | tr ACGTacgt TGCAtgca > temp2.txt
 	echo "${id}" | egrep -o '[ACGT]{8}' | tr ACGTacgt TGCAtgca | rev > temp3.txt
-	fgrep -f temp.txt $barcodes > bc.txt
-	fgrep -f temp2.txt $barcodes > bcc.txt
-	fgrep -f temp3.txt $barcodes > bcrc.txt 
+	fgrep -f temp.txt $barcodes > bc.txt;
+	fgrep -f temp2.txt $barcodes > bcc.txt;
+	fgrep -f temp3.txt $barcodes > bcrc.txt;
 	if [ -s bc.txt ];
 	then 
 	samtools view -h $bam | python2.7 /usr/roadrunner/programs/MIPGEN/tools/mipgen_smmip_collapser.py 8 ${id} -m $mips -f 2 -T -r -w False -S -b bc.txt -s
