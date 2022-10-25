@@ -5,12 +5,12 @@ process createtable {
 
         input:
         tuple val(run), val(GQ), path(vcf)
+		path alleles
+		path allelesidx
 
 
         output:
         tuple val(run), val(GQ), path("${run}.${GQ}.genotypes.tsv")
-		path alleles
-		path allelesidx
 
 
 		"""
