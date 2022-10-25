@@ -14,7 +14,7 @@ process createtable {
 
 
 		"""
-		cat alleles | cut -f 3 | egrep rs[1234567890] > 541variants.txt
+		cat $alleles | cut -f 3 | egrep rs[1234567890] > 541variants.txt
 		plink1.9 --vcf $vcf --allow-no-sex --recode --out table --make-bed --double-id --extract 541variants.txt
 		transpose -t -l 2000x2000 --fsep " " table.ped > table.transposed.ped
 		head -n 1 table.transposed.ped > header.transposed.ped
