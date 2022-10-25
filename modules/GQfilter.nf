@@ -1,7 +1,7 @@
 process GQfilter {
 
 	tag "$id"
-	container "docker://laurenshannes/revivid"	
+	container "docker://laurenshannes/revivid:latest"	
 
         input:
         tuple val(id), path(vcf), path(vcftbi)
