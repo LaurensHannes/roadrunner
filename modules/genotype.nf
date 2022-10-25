@@ -28,7 +28,7 @@ process genotype {
         output:
         tuple val(id), file("${id}.vcf.gz"), file("${id}.vcf.gz.tbi")
         """
-        gatk HaplotypeCaller --verbosity INFO -L $interval -R $genome -I $bam -O ${id}.temp.vcf.gz --sequence-dictionary ${dict} --native-pair-hmm-threads ${task.cpus} --force-call-filtered-alleles true --alleles $alleles --dbsnp $alleles
+        gatk HaplotypeCaller --verbosity INFO -L $interval -R $genome -I $bam -O ${id}.temp.vcf.gz --sequence-dictionary ${dict} --native-pair-hmm-threads ${task.cpus} --force-call-filtered-alleles true --alleles $alleles --dbsnp $alleles --mapping-quality-threshold-for-genotyping 0
 		gatk SelectVariants -R $genome -V ${id}.temp.vcf.gz -O ${id}.vcf.gz --concordance $alleles
 		
         """
