@@ -3,7 +3,7 @@ process mipgenparam {
         tag "$id"
         time { 30.minute * task.attempt }
 		memory '2 GB'
-        errorStrategy 'retry'
+        errorStrategy 'ignore'
         maxRetries 3
 		cpus 1
 		
