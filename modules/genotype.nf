@@ -19,14 +19,16 @@ process genotype {
         path genome 
         path indexes
 		path interval
-		path dict		
+		path dict	
+		path alleles
+		path allelesidx
 
 		
 		
         output:
         tuple val(id), file("${id}.g.vcf.gz"), file("${id}.g.vcf.gz.tbi")
         """
-        gatk HaplotypeCaller --verbosity INFO -ERC GVCF -L $interval -R $genome -I $bam -O ${id}.g.vcf.gz --sequence-dictionary ${dict} --pcr-indel-model NONE -G StandardAnnotation -G AS_StandardAnnotation -G StandardHCAnnotation --native-pair-hmm-threads ${task.cpus}
+        gatk HaplotypeCaller --verbosity INFO -ERC GVCF -L $interval -R $genome -I $bam -O ${id}.g.vcf.gz --sequence-dictionary ${dict} --pcr-indel-model NONE -G StandardAnnotation -G AS_StandardAnnotation -G StandardHCAnnotation --native-pair-hmm-threads ${task.cpus} --force-call-filtered-alleles true --alleles $alleles 
         """
 
 }
