@@ -24,7 +24,17 @@ process mipgenparam {
 	"""
 	echo "${id}" | egrep -o '[ACGT]{8}' > temp.txt
 	fgrep -f temp.txt $barcodes > bc.txt 
-    samtools view -h $bam | python2.7 /usr/roadrunner/programs/MIPGEN/tools/mipgen_smmip_collapser.py 8 ${id} -m $mips -f 2 -T -r -w False -S -b bc.txt -s
+	if [ -s bc.txt ] then 
+	samtools view -h $bam | python2.7 /usr/roadrunner/programs/MIPGEN/tools/mipgen_smmip_collapser.py 8 ${id} -m $mips -f 2 -T -r -w False -S -b bc.txt -s
+	else 
+	echo "${id}" | egrep -o '[ACGT]{8}' | tr ACGTacgt TGCAtgca > temp.txt
+	fgrep -f temp.txt $barcodes > bc.txt
+	samtools view -h $bam | python2.7 /usr/roadrunner/programs/MIPGEN/tools/mipgen_smmip_collapser.py 8 ${id} -m $mips -f 2 -T -r -w False -S -b bc.txt -s
+	else
+	echo "${id}" | egrep -o '[ACGT]{8}' | tr ACGTacgt TGCAtgca | rev > temp.txt
+	fgrep -f temp.txt $barcodes > bc.txt
+	samtools view -h $bam | python2.7 /usr/roadrunner/programs/MIPGEN/tools/mipgen_smmip_collapser.py 8 ${id} -m $mips -f 2 -T -r -w False -S -b bc.txt -s
+	fi
 	"""	
 
 }
