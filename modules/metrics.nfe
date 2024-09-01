@@ -1,0 +1,35 @@
+process metrics {
+
+	tag "$id"
+	container "docker://laurenshannes/revivid:latest"	
+		myDir = file('./results/metrics')
+	myDir.mkdirs()
+	publishDir './results/metrics', mode: 'copy', overwrite: true
+
+
+        input:
+       	tuple val(run), val(GQ), path(vcf)
+	path targets 
+         
+
+        output:
+	
+	path(${id}.${GQ}.imiss)
+	path(${id}.${GQ}.lmiss)        
+	path(${id}.${GQ}.metrics.log)	
+
+	script:
+
+
+        """
+	plink1.9 --vcf ../$vcf  --recode    --out ${id}.${GQ}.temp --make-bed --missing -extract $targets 
+perl -i -pe 's/^\s+//g' ${id}.${GQ}.temp.imiss 
+perl -i -pe 's/^\s+//g' ${id}.${GQ}.temp.lmiss
+perl -i -pe 's/ \s*/\t/g' ${id}.${GQ}.temp.imiss 
+perl -i -pe 's/ \s*/\t/g' ${id}.${GQ}.temp.lmiss 
+cut -f 1,2,4,5,6 ${id}.${GQ}.temp.imiss > ${id}.${GQ}.subset.imiss
+paste ${id}.${GQ}.subset.imiss <(cat <(echo "callrate") <(awk '{print (1-\$5)}' ${id}.${GQ}.subset.imiss | sed -e "1d")) > ${id}.${GQ}.imiss
+paste ${id}.${GQ}.temp.lmiss <(cat <(echo "callrate") <(awk '{print (1-\$5)}' ${id}.${GQ}.temp.lmiss | sed -e "1d")) > ${id}.${GQ}.lmiss
+egrep 'Total genotyping rate' ${id}.${GQ}.temp.log >> ${id}.${GQ}.metrics.log
+"""
+} 

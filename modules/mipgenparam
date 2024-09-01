@@ -24,6 +24,7 @@ process mipgenparam {
 
 	"""
 	echo "${id}" | egrep -o '[ACGT]{8}' > temp.txt
+	echo "${id}" | egrep -o '[ACGT]{8}' | tr 'ATCGatcg' 'TAGCtagc' | rev >> temp.txt
 	fgrep -f temp.txt $barcodes > bc.txt 
     samtools view -h $bam | python2.7 /usr/roadrunner/programs/MIPGEN/tools/mipgen_smmip_collapser.py 8 ${y}_${x} -m $mips -f 2 -T -r -w False -S -b bc.txt -s
 	"""	

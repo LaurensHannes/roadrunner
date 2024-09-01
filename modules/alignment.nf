@@ -8,7 +8,6 @@
 			 time { 4.hour * task.attempt }
 		 errorStrategy 'retry' 
 		maxRetries 3
-					publishDir './results/bams', mode: 'copy', overwrite: true
 
 
 		input:

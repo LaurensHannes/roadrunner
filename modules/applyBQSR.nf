@@ -6,7 +6,7 @@ process applyBQSR {
 		maxRetries 3
 		cpus 1
 			container "broadinstitute/gatk"
-
+		publishDir './results/bams', mode: 'copy', overwrite: true
 
         input:
 

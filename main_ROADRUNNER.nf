@@ -38,6 +38,7 @@ include { create_wise_files } from './modules/createwisefiles.nf'
 include { combined_wise } from './modules/combinewise.nf'
 include { createtable } from './modules/createtable.nf'
 include { duplicates } from './modules/duplicates.nf'
+include { metrics } from './modules/metrics.nf'
 
 //channels
 
@@ -51,7 +52,7 @@ workflow {
 main:
 prepare_interval(params.designbed)
 unzip(params.rawdata)
-unzip.out[0].flatten().filter(~/.*R\d+.fastq.gz/).map{file -> tuple(file.getBaseName(3), file)}.groupTuple().dump(tag:"test").flatten().collate( 3 ).map{lane,R1,R2 -> tuple(R1.simpleName,lane,R1,R2)}.set{gzipped_ch}
+unzip.out[0].flatten().filter(~/.*R[12].*.fastq.gz/).map{file -> tuple(file.getBaseName(3), file)}.view().groupTuple().dump(tag:"test").flatten().collate( 3 ).map{lane,R1,R2 -> tuple(R1.simpleName,lane,R1,R2)}.set{gzipped_ch}
 fastQC(gzipped_ch)
 pear(gzipped_ch)
 mipgenPE(pear.out[0],params.barcodes)
@@ -63,11 +64,14 @@ sortbam(mipgenparam.out[0])
 baserecalibrator(sortbam.out[0],params.genome, indexes_ch, params.genomedict, params.snps, params.snpsindex)
 applyBQSR(baserecalibrator.out,params.genome,indexes_ch,params.genomedict)
 genotype(applyBQSR.out,params.genome,indexes_ch,prepare_interval.out[0],params.genomedict,params.alleles,params.allelesidx)
-genotypeGVCFs(genotype.out[0],params.genome,indexes_ch,params.genomedict,prepare_interval.out[0],params.alleles,params.allelesidx)
-GQfilter(genotypeGVCFs.out[0],GQ_ch)
-create_run_vcf(GQfilter.out[0].map{id,vcfgz,vcftbi -> vcfgz}.flatten().toList(),GQfilter.out[0].map{id,vcfgz,vcftbi -> vcftbi}.flatten().toList(),run,GQ_ch)
+//genotypeGVCFs(genotype.out[0],params.genome,indexes_ch,params.genomedict,prepare_interval.out[0],params.alleles,params.allelesidx)
+GQfilter(genotype.out[0],GQ_ch)
+create_run_vcf(GQfilter.out[0].map{id,vcfgz,vcftbi -> vcfgz}.flatten().toList(),GQfilter.out[0].map{id,vcfgz,vcftbi -> vcftbi}.flatten().toList(),run,GQ_ch,params.alleles,params.allelesidx)
+metrics(create_run_vcf.out[0],params.targets)
 offtargetcount(mipgenparam.out[1],params.mips,params.barcodes)
 create_wise_files(mipgenparam.out[2].join(offtargetcount.out[0]),mipgenparam.out[3].join(offtargetcount.out[1]),params.barcodes,run)
 combined_wise(create_wise_files.out[0].map{id,txt -> txt}.flatten().toList(), create_wise_files.out[1].map{id,txt -> txt}.flatten().toList(),create_wise_files.out[2].map{id,txt -> txt}.first(),run)
-createtable(create_run_vcf.out[0])
+createtable(create_run_vcf.out[0],params.alleles,params.allelesidx)
+
 }
+

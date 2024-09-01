@@ -1,3 +1,4 @@
+
 process mipgenparam {
 
         tag "$id"
@@ -17,14 +18,16 @@ process mipgenparam {
     
 	tuple val(id), path('*.uncollapsed.sam')
 	tuple val(id), path('*.off_target_reads.sam')
-	tuple val(id), path('*samplewise*')
+	tuple val(id), path('*samplewise*'),path(bam),path(bai)
 	tuple val(id), path('*mipwise*')
 	tuple val(id), path('*')
 
 	"""
-	echo "${id}" | egrep -o '[ACGT]{8}' > temp.txt
-	fgrep -f temp.txt $barcodes > bc.txt 
-    samtools view -h $bam | python2.7 /usr/roadrunner/programs/MIPGEN/tools/mipgen_smmip_collapser.py 8 ${id} -m $mips -f 2 -T -r -w False -S -b bc.txt -s
+
+	echo "${id}" | egrep -o '[ACGT]{8}' >> temp.txt
+	#echo "${id}" | egrep -o '[ACGT]{8}' | tr 'ATCGatcg' 'TAGCtagc' | rev >> temp.txt
+	fgrep -f temp.txt $barcodes > bc.txt	
+samtools view -h $bam | python2.7 /usr/roadrunner/programs/MIPGEN/tools/mipgen_smmip_collapser.py 8 ${id} -m $mips -f 2 -T -r -w False -S -b bc.txt -s
 	"""	
 
 }

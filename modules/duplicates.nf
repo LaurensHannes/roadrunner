@@ -5,8 +5,8 @@ process duplicates {
 		container "docker://broadinstitute/gatk"
         errorStrategy 'retry'
          maxRetries 3
-		 	maxForks 8
-			publishDir './results/bams', mode: 'copy', overwrite: true
+		 	maxForks 32
+			
 		
 	input:
 	tuple val(id),file(bam),file(bai) 
@@ -18,7 +18,7 @@ process duplicates {
 
 	
 	"""
-	gatk MarkDuplicates -I $bam -O ${id}.dups.bam -M ${id}.metrics.txt 
+	gatk MarkDuplicates -I $bam -O ${id}.dups.bam -M ${id}.metrics.txt -DS RANDOM
 	samtools index ${id}.dups.bam
 	"""
 }

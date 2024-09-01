@@ -14,7 +14,7 @@ process combined_wise {
 	tuple val(run),path ("${run}.mipwise_combined.txt")
 
 	"""
-	cat <(echo "sample""\t""on""\t""off") $samples > ${run}.samplewise_combined.txt
+	cat <(echo "sample""\t""on""\t""off""\t""unmapped") $samples > ${run}.samplewise_combined.txt
 	paste  $probes $mips > ${run}.mipwise_combined.txt
 	"""
 
