@@ -1,6 +1,6 @@
 process create_run_vcf {
 
-	container "docker://nanozoo/bcftools:1.19--1dccf69"
+	container "nanozoo/bcftools:1.19--1dccf69"
 	publishDir "./results/$run", mode: 'copy', overwrite: true
 
         input:
@@ -8,6 +8,7 @@ process create_run_vcf {
         path vcftbi
         val run
         val GQ 
+        val DP
 		path alleles
 		path allelesidx
 
@@ -18,7 +19,7 @@ process create_run_vcf {
 		bgzip $alleles
 		tabix ${alleles}.gz
         bcftools merge -m both,** ${alleles}.gz $vcfgz > ${run}.temp.${GQ}.vcf
-	 bcftools plugin setGT -- ${run}.temp.${GQ}.vcf -t q -n ./. -i 'FMT/DP<20 && GQ<20' > ${run}.${GQ}.vcf
+	 bcftools plugin setGT -- ${run}.temp.${GQ}.vcf -t q -n ./. -i 'FMT/DP<$DP && GQ<$GQ' > ${run}.${GQ}.vcf
         #vcf-merge $vcfgz > ${run}.${GQ}.vcf
 	"""
 }

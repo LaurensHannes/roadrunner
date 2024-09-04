@@ -1,7 +1,7 @@
 process metrics {
 
 	tag "$run"
-	container "docker://laurenshannes/revivid"	
+	container "laurenshannes/revivid"	
 	publishDir "./results/$run/metrics", mode: 'copy', overwrite: true
 
 

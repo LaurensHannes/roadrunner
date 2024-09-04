@@ -1,12 +1,15 @@
 process GQfilter {
 
 	tag "$id"
-	container "docker://laurenshannes/revivid"
+        container "nanozoo/bcftools:1.19--1dccf69"
 
         input:
         tuple val(id), path(vcf), path(vcftbi)
-		val GQ 
-         
+	val GQ 
+        val DP
+        path genome 
+        path indexes
+
 
         output:
         tuple val(id), path("${id}.${GQ}.vcf.gz"), path("${id}.${GQ}.vcf.gz.tbi")
@@ -37,8 +40,9 @@ gatk MergeVcfs -I homozygotes_dpfiltered.vcf.gz -I heterozygotes_dpfiltered.vcf.
 
 
 else 
-	"""
-bcftools plugin setGT -- $vcf -t q -n ./. -i 'FMT/DP<20 && FMT/GQ<20' > ${id}.${GQ}.vcf
+        """
+bcftools norm -f $genome -m -any -a --atom-overlaps '*' $vcf > ${id}.temp.${GQ}.vcf 
+bcftools plugin setGT -- ${id}.temp.${GQ}.vcf -t q -n ./. -i 'FMT/DP<20 && FMT/GQ<20' > ${id}.${GQ}.vcf
 bgzip ${id}.${GQ}.vcf
 tabix ${id}.${GQ}.vcf.gz
 	"""

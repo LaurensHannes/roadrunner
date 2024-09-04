@@ -4,7 +4,7 @@ process genotypeGVCFs {
 		 time { 10.hour * task.attempt }
 		 errorStrategy 'retry' 
 		maxRetries 3
-		container "docker://broadinstitute/gatk"
+		container "broadinstitute/gatk"
 	cpus 4
 
 
